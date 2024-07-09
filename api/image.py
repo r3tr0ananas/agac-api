@@ -55,20 +55,20 @@ class Image:
         self.tags = self.toml.get("tags", [])
         self.sources = self.toml.get("sources", [])
     
-    def downscale_image(self) -> bytes:
+    def downscale_image(self) -> Path:
         downscaled_image_path = Path(CACHE_PATH).joinpath(self.path.stem + ".png")
 
         if downscaled_image_path.exists():
-            return downscaled_image_path.open("rb")
+            return downscaled_image_path
 
         image = PImage.open(self.path)
 
         if image.size[0] >= 3840 and image.size[1] >= 2160:
             image = image.resize((1920, 1080))
 
-        image.save(downscaled_image_path, format='PNG')
+        image.save(downscaled_image_path, format="PNG")
 
-        return downscaled_image_path.open("rb")
+        return downscaled_image_path
 
     def to_dict(self) -> ImageData:
         return {
@@ -85,9 +85,8 @@ class Image:
         if raw is False:
             downscaled_image = self.downscale_image()
 
-            return StreamingResponse(
+            return FileResponse(
                 downscaled_image, 
-                media_type="image/png",
                 headers = {
                     "Expires": "0",
                     "x-image-id": self.id
