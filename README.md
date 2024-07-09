@@ -8,8 +8,6 @@
 
 This is an API for anime-girls-and-computers [github repo](https://github.com/THEGOLDENPRO/anime-girls-and-computers).
 
-<img src="./assets/screenshot.png" width="600px">
-
 ## 🌐 Publicly available instances
 - Coming Soon™
 
