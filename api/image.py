@@ -10,6 +10,7 @@ from pathlib import Path
 from dataclasses import dataclass, field
 from fastapi.responses import FileResponse, StreamingResponse
 import toml
+from .constants import CACHE_PATH
 from PIL import Image as PImage
 import io
 
@@ -53,7 +54,21 @@ class Image:
         self.category = str(self.path).split("/")[3]
         self.tags = self.toml.get("tags", [])
         self.sources = self.toml.get("sources", [])
+    
+    def downscale_image(self) -> bytes:
+        downscaled_image_path = Path(CACHE_PATH).joinpath(self.path.stem + ".png")
 
+        if downscaled_image_path.exists():
+            return downscaled_image_path.open("rb")
+
+        image = PImage.open(self.path)
+
+        if image.size[0] >= 3840 and image.size[1] >= 2160:
+            image = image.resize((1920, 1080))
+
+        image.save(downscaled_image_path, format='PNG')
+
+        return downscaled_image_path.open("rb")
 
     def to_dict(self) -> ImageData:
         return {
@@ -68,17 +83,10 @@ class Image:
     def to_file_response(self, raw: bool = False) -> FileResponse:
         """Returns file response object."""
         if raw is False:
-            image = PImage.open(self.path)
-
-            if image.size[0] >= 3840 and image.size[1] >= 2160:
-                image = image.resize((1920, 1080))
-
-            img_byte_arr = io.BytesIO()
-            image.save(img_byte_arr, format='PNG')
-            img_byte_arr.seek(0)
+            downscaled_image = self.downscale_image()
 
             return StreamingResponse(
-                img_byte_arr, 
+                downscaled_image, 
                 media_type="image/png",
                 headers = {
                     "Expires": "0",
