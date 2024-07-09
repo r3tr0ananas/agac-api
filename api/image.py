@@ -8,7 +8,7 @@ from typing_extensions import TypedDict, final
 
 from pathlib import Path
 from dataclasses import dataclass, field
-from fastapi.responses import FileResponse, StreamingResponse
+from fastapi.responses import FileResponse
 import toml
 from .constants import CACHE_PATH
 from PIL import Image as PImage
@@ -98,5 +98,5 @@ class Image:
             headers = {
                 "Expires": "0",
                 "x-image-id": self.id
-            }
+            }   
         )
