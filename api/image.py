@@ -12,7 +12,6 @@ from fastapi.responses import FileResponse
 import toml
 from .constants import CACHE_PATH
 from PIL import Image as PImage
-import io
 
 __all__ = (
     "ImageData",
