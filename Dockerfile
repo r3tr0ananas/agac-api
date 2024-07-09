@@ -5,12 +5,13 @@ USER root
 WORKDIR /app
 
 COPY /api ./api
+COPY /assets ./assets
 COPY pyproject.toml .
 COPY Makefile .
 
 RUN apt-get update && apt-get install -y git make
 
-RUN pip install .
+RUN make
 
 EXPOSE 8000
 ENV LISTEN_PORT = 8000

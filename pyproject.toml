@@ -1,5 +1,5 @@
 [project]
-name = "api"
+name = "AGAC-API"
 description = "Some API"
 authors = [
     {name = "Ananas", email = "ananas@ananas.moe"}
@@ -21,6 +21,11 @@ classifiers = [
 dependencies = [
     "fastapi[all]",
     "uvicorn[standard]",
+    "python-decouple",
+    "thefuzz",
+    "toml",
+    "slowapi",
+    "Pillow"       
 ]
 
 dynamic = ["version"]
@@ -32,8 +37,8 @@ dev = [
 ]
 
 [project.urls]
-GitHub = ""
-BugTracker = ""
+GitHub = "https://github.com/r3tr0ananas/agac-api"
+BugTracker = "https://github.com/r3tr0ananas/agac-api/issues"
 
 [tool.setuptools.dynamic]
 version = { attr = "api.__version__" }
@@ -41,3 +46,6 @@ version = { attr = "api.__version__" }
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["api*"]
