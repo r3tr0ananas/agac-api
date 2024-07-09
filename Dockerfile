@@ -5,7 +5,7 @@ USER root
 WORKDIR /app
 
 COPY /api ./api
-COPY /assets ./assets
+RUN mkdir /assets/cache -p
 COPY pyproject.toml .
 COPY Makefile .
 
