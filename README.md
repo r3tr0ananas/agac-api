@@ -37,7 +37,7 @@ source env/bin/activate # For windows it's --> cd env/Scripts && activate && cd 
 ```sh
 make
 ```
-4. Pull the ~~anime girls~~ computer images.
+4. Pull the ~~anime girls~~ images.
 ```sh
 make get-repo
 ```
