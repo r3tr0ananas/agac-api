@@ -2,7 +2,7 @@
 
   # 🖥️ AGAC API
 
-  <sub>Behold the **anime-girls-and-computers** API!</sub>
+  <sub>The **anime-girls-and-computers** API!</sub>
 
 </div>
 
