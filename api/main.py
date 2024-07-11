@@ -49,7 +49,7 @@ async def root(request: Request):
     tags = ["other"]
 )
 async def info():
-    """Returns repository information like image count and etc."""  
+    """Returns repository information like image count and etc."""
     return {
         "version": __version__, 
         "image_count": len(agac.images)
