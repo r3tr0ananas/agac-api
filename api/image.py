@@ -84,7 +84,8 @@ class Image:
             downscaled_image = self.downscale_image()
 
             return FileResponse(
-                downscaled_image, 
+                downscaled_image,
+                media_type="image/webp",
                 headers = {
                     "Expires": "0",
                     "x-image-id": self.id
