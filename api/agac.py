@@ -4,9 +4,11 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from typing import Optional, Union, List, Dict
 
+from pathlib import Path
+
 import random
 import subprocess
-from pathlib import Path
+
 from .image import Image
 from .constants import GIT_PATH, ALLOWED_FILE_EXTENSIONS    
 

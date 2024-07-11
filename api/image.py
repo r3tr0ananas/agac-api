@@ -9,9 +9,11 @@ from typing_extensions import TypedDict, final
 from pathlib import Path
 from dataclasses import dataclass, field
 from fastapi.responses import FileResponse
-import toml
-from .constants import CACHE_PATH
 from PIL import Image as PImage
+
+import toml
+
+from .constants import CACHE_PATH
 
 __all__ = (
     "ImageData",
@@ -49,23 +51,20 @@ class Image:
 
         self.id = self.path.stem
         self.name = self.toml.get("name", "")
-        self.authors = self.toml.get("authors", [])
+        self.authors = self.toml.get("authors", []) or self.toml.get("author", [])
         self.category = str(self.path).split("/")[3]
         self.tags = self.toml.get("tags", [])
         self.sources = self.toml.get("sources", [])
     
     def downscale_image(self) -> Path:
-        downscaled_image_path = Path(CACHE_PATH).joinpath(self.path.stem + ".png")
+        downscaled_image_path = Path(CACHE_PATH).joinpath(self.path.stem + ".webp")
 
         if downscaled_image_path.exists():
             return downscaled_image_path
 
         image = PImage.open(self.path)
 
-        if image.size[0] >= 3840 and image.size[1] >= 2160:
-            image = image.resize((1920, 1080))
-
-        image.save(downscaled_image_path, format="PNG")
+        image.save(downscaled_image_path, format="WEBP")
 
         return downscaled_image_path
 

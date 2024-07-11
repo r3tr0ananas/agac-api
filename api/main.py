@@ -10,14 +10,14 @@ from slowapi.errors import RateLimitExceeded
 
 from thefuzz import fuzz
 from urllib.parse import unquote
-import os
+from os import environ
 
 from .agac import Agac
 from .image import Image, ImageData
 from .constants import RATE_LIMIT
 from . import __version__, errors
 
-ROOT_PATH = (lambda x: x if x is not None else "")(os.environ.get("ROOT_PATH"))
+ROOT_PATH = (lambda x: x if x is not None else "")(environ.get("ROOT_PATH"))
 
 limiter = Limiter(key_func=get_remote_address, headers_enabled = True)
 app = FastAPI(
@@ -48,7 +48,7 @@ async def root(request: Request):
 async def info():
     """Returns repository information like image count and etc."""
     return {
-        "api_version": __version__, 
+        "version": __version__, 
         "image_count": len(agac.images)
     }
 
