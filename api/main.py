@@ -36,7 +36,10 @@ app.add_exception_handler(RateLimitExceeded, errors.rate_limit_handler)
 
 agac = Agac()
 
-@app.get("/")
+@app.get(
+    "/",
+    tags = ["misc"]
+)
 async def root(request: Request):
     return RedirectResponse(f"{ROOT_PATH}/docs")
 
@@ -46,11 +49,28 @@ async def root(request: Request):
     tags = ["other"]
 )
 async def info():
-    """Returns repository information like image count and etc."""
+    """Returns repository information like image count and etc."""  
     return {
         "version": __version__, 
         "image_count": len(agac.images)
     }
+
+@app.get(
+    "/all",
+    name = "Allows you to get all avaliable image metadata.",
+    tags = ["image"],
+    response_class = JSONResponse,
+    responses = {
+        200: {
+            "model": List[ImageData],
+            "description": "Returns list of image objects.",
+        }
+    },
+)
+async def all(request: Request):
+    return [
+        image.to_dict() for image in agac.images
+    ]
 
 @app.get(
     "/get/{id}",
@@ -60,8 +80,8 @@ async def info():
     responses = {
         200: {
             "content": {
-                "image/png": {},
-                "image/jpeg": {}
+                "image/webp": {},
+                "image/png": {}
             },
             "description": "Returned an image successfully. 😁",
         },
@@ -124,8 +144,8 @@ async def get_metadata(request: Request, id: str):
     responses = {
         200: {
             "content": {
-                "image/png": {},
-                "image/jpeg": {}
+                "image/webp": {},
+                "image/png": {}
             },
             "description": "Returned an image successfully. 😁",
         },
@@ -173,6 +193,47 @@ async def search(
 
     return [
         image[1].to_dict() for image in images
+    ]
+
+@app.get(
+    "/search/advanced",
+    name = "Advanced Search for images.",
+    tags = ["image"],
+    description = "You add multiple tags by adding \",\" after each tag",
+    response_class = JSONResponse,
+    responses = {
+        200: {
+            "model": List[ImageData],
+            "description": "Returns list of image objects.",
+        },
+    },
+)
+async def search_advanced(
+    request: Request,
+    tags: str = "",
+    author: str = None,
+    limit: int = 10
+):
+    tags = tags.split(",")
+    images: List[Image] = []
+
+    for image in agac.images:
+        if len(images) == limit:
+            break
+
+        for tag in tags:
+            for image_tag in image.tags:
+                if fuzz.partial_ratio(image_tag, tag) > 70:
+                    if image not in images:
+                        images.append(image)
+        
+        for image_authors in image.authors:
+            if image_authors["github"] == author:
+                if image not in images:
+                    images.append(image)
+
+    return [
+        image.to_dict() for image in images
     ]
 
 @app.get(
