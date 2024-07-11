@@ -51,7 +51,7 @@ class Image:
 
         self.id = self.path.stem
         self.name = self.toml.get("name", "")
-        self.authors = self.toml.get("authors", []) or self.toml.get("author", [])
+        self.authors = self.toml.get("authors", []) or [self.toml.get("author", [])]
         self.category = str(self.path).split("/")[3]
         self.tags = self.toml.get("tags", [])
         self.sources = self.toml.get("sources", [])
