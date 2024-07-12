@@ -15,7 +15,17 @@ This is an API for anime-girls-and-computers [github repo](https://github.com/TH
 How to host your own AGAC API instance
 
 ### 🐬 Docker Method (recommended)
-Coming Soon™
+1. Pull the image
+```sh
+docker pull r3tr0ananas/agac-api:latest
+``` 
+2. Then launch a container with this command.
+> *you don't really need to mount a volume but it's recommended*
+```sh
+docker run -p 8000:8000/tcp -v ./cached_images:/app/assets/cache r3tr0ananas/agac-api:latest
+```
+3. Now visit ``localhost:8000`` in your browser and there you go! 👍
+> *if you wanna use docker-compose, [this file](./docker-compose.yml) might be useful to you*
 
 ### 🐍 Native Method (recommended for development)
 
@@ -41,7 +51,7 @@ make
 ```sh
 make get-repo
 ```
-5. Run that sh#t.
+5. Run.
 ```sh
 make run
 ```

@@ -54,12 +54,27 @@ class ImageMetadataNotFound(BaseModel):
         }
     }
 
+class RateLimited(BaseModel):
+    error: str
+    message: str
+
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "error": "RateLimited",
+                    "message": "Rate limit exceeded: 3 per 1 second (Follow the rates: https://github.com/r3tr0ananas/agac-api/wiki#-rate-limiting)"
+                }
+            ]
+        }
+    }
+
 def rate_limit_handler(request: Request, exc: RateLimitExceeded):
     response = JSONResponse(
         status_code = 429,
         content = {
             "error": "RateLimited", 
-            "message": f"Rate limit exceeded: {exc.detail} (Follow the rates: https://github.com/r3tr0ananas/agac-api/wiki#rate-limiting)"
+            "message": f"Rate limit exceeded: {exc.detail} (Follow the rates: https://github.com/r3tr0ananas/agac-api/wiki#-rate-limiting)"
         }
     )
 

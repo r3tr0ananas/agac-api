@@ -19,16 +19,43 @@ from . import __version__, errors
 
 ROOT_PATH = (lambda x: x if x is not None else "")(environ.get("ROOT_PATH"))
 
+TAGS_METADATA = [
+    {
+        "name": "image",
+        "description": "The main endpoints that allow you to get images."    
+    },
+    {
+        "name": "other",
+        "description": "Other endpoints."
+    }
+]
+
+DESCRIPTION = """
+<div align="center">
+
+  <img src="https://api.ananas.moe/agac/v1/get/miyako_shikimori_fedora" width="600">
+
+  The **anime-girls-and-computers** API!
+
+  This is an API for anime-girls-and-computers [github repo](https://github.com/THEGOLDENPRO/anime-girls-and-computers).
+
+  Report bugs [over here](https://github.com/r3tr0ananas/agac-api/issues).
+
+</div>
+
+Rate limiting applies to the ``/random`` and ``/get`` endpoints. Check out the rate limits [over here](https://github.com/r3tr0ananas/agac-api/wiki#-rate-limiting).
+"""
+
+
 limiter = Limiter(key_func=get_remote_address, headers_enabled = True)
 app = FastAPI(
     title = "AGAC-API",
-    description = "", 
+    description = DESCRIPTION,
     license_info = {
-        "name": "MIT", 
+        "name": "License: MIT", 
         "identifier": "MIT",
-    }, 
+    },
     version = f"v{__version__}",
-
     root_path = ROOT_PATH
 )
 app.state.limiter = limiter
@@ -38,9 +65,9 @@ agac = Agac()
 
 @app.get(
     "/",
-    tags = ["misc"]
+    tags = ["other"]
 )
-async def root(request: Request):
+async def root():
     return RedirectResponse(f"{ROOT_PATH}/docs")
 
 @app.get(
@@ -49,7 +76,7 @@ async def root(request: Request):
     tags = ["other"]
 )
 async def info():
-    """Returns repository information like image count and etc."""
+    """Returns repository information like image count and etc."""      
     return {
         "version": __version__, 
         "image_count": len(agac.images)
@@ -67,7 +94,7 @@ async def info():
         }
     },
 )
-async def all(request: Request):
+async def all():
     return [
         image.to_dict() for image in agac.images
     ]
@@ -89,6 +116,10 @@ async def all(request: Request):
             "model": errors.ImageNotFound,
             "description": "The image was not Found."
         },
+        429: {
+            "model": errors.RateLimited,
+            "description": "Rate Limit exceeded"
+        }
     },
 )
 @limiter.limit(f"{RATE_LIMIT}/second")
@@ -122,7 +153,7 @@ async def get(request: Request, id: str, raw: bool = False):
         },
     },
 )
-async def get_metadata(request: Request, id: str):
+async def get_metadata(id: str):
     image = agac.get(id)
 
     if image is not None:
@@ -140,6 +171,7 @@ async def get_metadata(request: Request, id: str):
     "/random",
     name = "Get a random image",
     tags = ["image"],
+    description = "To retrieve metadata for a random image, check the `x-image-id` header for the search ID.",
     response_class = FileResponse,
     responses = {
         200: {
@@ -149,6 +181,10 @@ async def get_metadata(request: Request, id: str):
             },
             "description": "Returned an image successfully. 😁",
         },
+        429: {
+            "model": errors.RateLimited,
+            "description": "Rate Limit exceeded"
+        }
     },
 )
 @limiter.limit(f"{RATE_LIMIT}/second")  
@@ -170,7 +206,6 @@ async def random_image(request: Request, category: str = None, raw: bool = False
     },
 )
 async def search(
-    request: Request, 
     query: str,
     category: str = None,
     limit: int = 10
@@ -199,7 +234,7 @@ async def search(
     "/search/advanced",
     name = "Advanced Search for images.",
     tags = ["image"],
-    description = "You add multiple tags by adding \",\" after each tag",
+    description = "You can add multiple tags by adding \",\" after each tag",
     response_class = JSONResponse,
     responses = {
         200: {
@@ -209,7 +244,6 @@ async def search(
     },
 )
 async def search_advanced(
-    request: Request,
     tags: str = "",
     author: str = None,
     limit: int = 10
@@ -247,7 +281,5 @@ async def search_advanced(
         },
     },
 )
-async def categories(request: Request):
-    return list(agac.categories.keys())     
-
-
+async def categories():
+    return list(agac.categories.keys())

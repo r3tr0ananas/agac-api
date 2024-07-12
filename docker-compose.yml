@@ -1,0 +1,8 @@
+services:
+  agac-api:
+    image: r3tr0ananas/agac-api:latest
+    volumes:  
+      - ./cached_images:/app/assets/cache 
+    environment:  
+      ROOT_PATH: ""
+    restart: unless-stopped
