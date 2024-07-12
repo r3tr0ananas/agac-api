@@ -187,11 +187,11 @@ async def get_metadata(id: str):
         }
     },
 )
-@limiter.limit(f"{RATE_LIMIT}/second")  
+@limiter.limit(f"{RATE_LIMIT}/second")
 async def random_image(request: Request, category: str = None, raw: bool = False):
     image = agac.get_random(category)
 
-    return image.to_file_response(raw)
+    return image.to_file_response(raw, expire="0")
 
 @app.get(
     "/search",

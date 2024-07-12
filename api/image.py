@@ -78,7 +78,7 @@ class Image:
             "sources": self.sources
         }
 
-    def to_file_response(self, raw: bool = False) -> FileResponse:
+    def to_file_response(self, raw: bool = False, expire: str = "300") -> FileResponse:
         """Returns file response object."""
         if raw is False:
             downscaled_image = self.downscale_image()
@@ -87,7 +87,7 @@ class Image:
                 downscaled_image,
                 media_type="image/webp",
                 headers = {
-                    "Expires": "0",
+                    "Expires": expire,
                     "x-image-id": self.id
                 }
             )
@@ -95,7 +95,7 @@ class Image:
         return FileResponse(
             self.path,
             headers = {
-                "Expires": "0",
+                "Expires": expire,
                 "x-image-id": self.id
             }   
         )
