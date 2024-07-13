@@ -3,6 +3,8 @@ services:
     image: r3tr0ananas/agac-api:latest
     volumes:  
       - ./cached_images:/app/assets/cache 
-    environment:  
+    environment:
       ROOT_PATH: ""
+    ports:
+      - 8000:8000/tcp
     restart: unless-stopped
