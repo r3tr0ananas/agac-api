@@ -9,7 +9,9 @@
 This is an API for anime-girls-and-computers [github repo](https://github.com/THEGOLDENPRO/anime-girls-and-computers).
 
 ## 🌐 Publicly available instances
-- **🇩🇪 (OFFICIAL) [``https://api.ananas.moe/agac/v1``](https://api.ananas.moe/agac/v1) hosted by [me](https://github.com/r3tr0ananas)**
+| **Country** | **URL** | **Hosted by** | **Notes** |
+|:-----------:|:-------:|:-------------:|:---------:|
+| 🇩🇪 | [``https://api.ananas.moe/agac/v1``](https://api.ananas.moe/agac/v1) | [r3tr0ananas](https://github.com/r3tr0ananas) | Official Instance |
 
 ## 🛠️ Self-Host
 How to host your own AGAC API instance
