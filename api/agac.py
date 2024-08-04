@@ -10,7 +10,7 @@ import random
 import subprocess
 
 from .image import Image
-from .constants import GIT_PATH, ALLOWED_FILE_EXTENSIONS    
+from .constants import GIT_PATH, ALLOWED_FILE_EXTENSIONS
 
 __all__ = ("Agac",)
 
@@ -19,7 +19,7 @@ class Agac:
     def __init__(self) -> None:
         self._repo_path = Path(GIT_PATH)
 
-        self.__update_repo()
+        self.head_commit = self.__update_repo()
         self.images, self.categories = self.__phrase_images()
     
     def get_random(self, categorie: str = None) -> Image:
@@ -42,7 +42,7 @@ class Agac:
         )
 
         process = subprocess.Popen(
-            ["git", "pull"], 
+            ["git", "pull"],
             text = True, 
             stdout = subprocess.PIPE, 
             cwd = self._repo_path
@@ -51,10 +51,20 @@ class Agac:
         process.wait()
         output, _ = process.communicate()
 
-        if not process.returncode == 0: 
-            print("Git Error")
+        if not process.returncode == 0:
+            print(f"ERROR: {output}")
 
-        print(f"Git Output: {output}")
+        hash_process = subprocess.Popen(
+            ["git", "rev-parse", "HEAD"], 
+            text = True, 
+            stdout = subprocess.PIPE, 
+            cwd = self._repo_path
+        )
+
+        hash_process.wait()
+        hash, _ = hash_process.communicate()
+
+        return hash.replace("\n", "")
 
     def __phrase_images(self) -> Union[List[Image], Dict[str, List[Image]]]:
         images = []

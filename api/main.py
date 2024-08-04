@@ -17,7 +17,7 @@ from .image import Image, ImageData
 from .constants import RATE_LIMIT
 from . import __version__, errors
 
-ROOT_PATH = (lambda x: x if x is not None else "")(environ.get("ROOT_PATH"))
+ROOT_PATH = environ.get("ROOT_PATH", "")
 
 TAGS_METADATA = [
     {
@@ -79,7 +79,8 @@ async def info():
     """Returns repository information like image count and etc."""      
     return {
         "version": __version__, 
-        "image_count": len(agac.images)
+        "image_count": len(agac.images),
+        "agac_head_commit": agac.head_commit                        
     }
 
 @app.get(
