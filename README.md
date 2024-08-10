@@ -12,7 +12,7 @@ This is an API for anime-girls-and-computers [github repo](https://github.com/TH
 | Country | URL | Hosted by | Notes |
 |:-----------:|:-------:|:-------------:|:---------:|
 | 🇩🇪 | https://api.ananas.moe/agac/v1 | [r3tr0ananas](https://github.com/r3tr0ananas) | Official Instance |
-| 🇺🇸 | https://api.emmatech.dev/agac | [EmreTech](https://github.com/EmreTech) | Instance hosted with help from Ananas |
+| 🇺🇸 | https://api.emmatech.dev/agac | [EmmmaTech](https://github.com/EmmmaTech) | Instance hosted with help from Ananas |
 
 ## 🛠️ Self-Host
 How to host your own AGAC API instance
