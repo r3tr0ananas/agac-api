@@ -1,4 +1,4 @@
-FROM python:3.11-slim-bookworm
+FROM python:3.11-alpine
 
 USER root
 
@@ -9,7 +9,7 @@ COPY /assets ./assets
 COPY pyproject.toml .
 COPY Makefile .
 
-RUN apt-get update && apt-get install -y git make
+RUN apk update && apk add git make
 
 RUN make
 
