@@ -212,6 +212,7 @@ async def search(
     limit: int = 10
 ):
     images: List[Tuple[int, Image]] = []
+    query = unquote(query.lower())
 
     for image in agac.images:
         if len(images) == limit:
@@ -220,10 +221,15 @@ async def search(
         if category is not None and not category.lower() == image.category.lower():
             continue
 
-        name_match = fuzz.partial_ratio(image.name.lower(), unquote(query.lower()))
+        image_name = image.name.lower()
 
-        if name_match > 70:
-            images.append((name_match, image))
+        base_score = fuzz.partial_ratio(image_name, query)
+
+        penalty = abs(len(query) - len(image_name))
+        adjusted_score = base_score - penalty
+
+        if adjusted_score > 70:
+            images.append((adjusted_score, image))
 
     images.sort(key = lambda x: x[0], reverse = True) # Sort in order of highest match.
 
