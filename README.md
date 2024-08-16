@@ -11,7 +11,7 @@ This is an API for anime-girls-and-computers [github repo](https://github.com/TH
 ## 🌐 Publicly available instances
 | Country | URL | Hosted by | Notes |
 |:-----------:|:-------:|:-------------:|:---------:|
-| 🇩🇪 | https://api.ananas.moe/agac/v1 | [r3tr0ananas](https://github.com/r3tr0ananas) | Official Instance |
+| 🇩🇪 | https://api.ananas.moe/agac/v1 | [bananas](https://codeberg.org/bananas) | Official Instance |
 | 🇺🇸 | https://api.emmatech.dev/agac | [EmmmaTech](https://github.com/EmmmaTech) | Instance hosted with help from Ananas |
 
 ## 🛠️ Self-Host
@@ -27,19 +27,19 @@ docker pull r3tr0ananas/agac-api:latest
 ```sh
 docker run -p 8000:8000/tcp -v ./cached_images:/app/assets/cache r3tr0ananas/agac-api:latest
 ```
-3. Now visit ``localhost:8000`` in your browser and there you go! 👍
+3. Now visit ``localhost:8000`` in your browser and there you go!
 > *if you wanna use docker-compose, [this file](./docker-compose.yml) might be useful to you*
 
 ### 🐍 Native Method (recommended for development)
 
 #### Prerequisites:
 - [Git](https://git-scm.com/downloads)
-- [Python](https://www.python.org/downloads/) (3.8 - 3.11)
-- [Make](https://www.gnu.org/software/make/#download) ***(otherwise you'll have to copy the commands from the [Makefile](https://github.com/r3tr0ananas/agac-api/blob/main/Makefile))***
+- [Python](https://www.python.org/downloads/) (3.8+)
+- [Make](https://www.gnu.org/software/make/#download) ***(otherwise you'll have to copy the commands from the [Makefile](https://codeberg.org/bananas/agac-api/src/branch/main/Makefile))***
 
 1. Clone the repo.
 ```sh
-git clone https://github.com/r3tr0ananas/agac-api && cd agac-api
+git clone https://codeberg.org/bananas/agac-api && cd agac-api
 ```
 2. Create env.
 ```sh
@@ -58,4 +58,4 @@ make get-repo
 ```sh
 make run
 ```
-6. Visit ``localhost:8083`` in your browser, then all should be good! 🌈
+6. Visit ``localhost:8083`` in your browser, then all should be good!
