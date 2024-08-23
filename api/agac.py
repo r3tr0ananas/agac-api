@@ -22,10 +22,10 @@ class Agac:
         self.head_commit = self.__update_repo()
         self.images, self.categories = self.__phrase_images()
     
-    def get_random(self, categorie: str = None) -> Image:
-        if categorie is not None:
-            if categorie in self.categories:
-                return random.choice(self.categories[categorie])
+    def get_random(self, category: str = None) -> Image:
+        if category is not None:
+            if category in self.categories:
+                return random.choice(self.categories[category])
         
         return random.choice(self.images)
     

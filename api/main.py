@@ -189,8 +189,11 @@ async def get_metadata(id: str):
     },
 )
 @limiter.limit(f"{RATE_LIMIT}/second")
-async def random_image(request: Request, category: str = None, raw: bool = False):
+async def random_image(request: Request, category: str = None, raw: bool = False, metadata: bool = False):
     image = agac.get_random(category)
+
+    if metadata:
+        return JSONResponse(image.to_dict())
 
     return image.to_file_response(raw, expire="0")
 
