@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import List, Tuple, Optional
 
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse, JSONResponse, FileResponse
@@ -102,7 +102,12 @@ async def info():
         }
     },
 )
-async def all():
+async def all(category: Optional[str] = None):
+    if category is not None:
+        return [
+            image.to_dict() for image in agac.images if image.category == category
+        ]
+
     return [
         image.to_dict() for image in agac.images
     ]
