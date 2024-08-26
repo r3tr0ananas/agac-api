@@ -19,8 +19,7 @@ classifiers = [
 	'Programming Language :: Python :: 3.11'
 ]
 dependencies = [
-    "fastapi[all]",
-    "uvicorn[standard]",
+    "fastapi[standard]",
     "python-decouple",
     "thefuzz",
     "toml",
