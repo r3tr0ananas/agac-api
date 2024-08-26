@@ -40,11 +40,11 @@ DESCRIPTION = """
 
   This is an API for anime-girls-and-computers [github repo](https://github.com/THEGOLDENPRO/anime-girls-and-computers).
 
-  Report bugs [over here](https://github.com/r3tr0ananas/agac-api/issues).
+  Report bugs [over here](https://codeberg.org/bananas/agac-api/issues).
 
 </div>
 
-Rate limiting applies to the ``/random`` and ``/get`` endpoints. Check out the rate limits [over here](https://github.com/r3tr0ananas/agac-api/wiki#-rate-limiting).
+Rate limiting applies to the ``/random`` and ``/get`` endpoints. Check out the rate limits [over here](https://codeberg.org/bananas/agac-api/wiki#rate-limiting).
 """
 
 
