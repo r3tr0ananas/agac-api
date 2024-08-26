@@ -4,7 +4,7 @@ install:
 	pip install . -U
 
 run:
-	uvicorn api.main:app --reload --port 8083
+	fastapi dev api/main.py
 
 get-repo:
 	git clone https://github.com/THEGOLDENPRO/anime-girls-and-computers ./assets/repo

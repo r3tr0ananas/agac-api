@@ -2,6 +2,7 @@ from typing import List, Tuple
 
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse, JSONResponse, FileResponse
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.requests import Request
 
 from slowapi import Limiter
@@ -58,6 +59,12 @@ app = FastAPI(
     version = f"v{__version__}",
     root_path = ROOT_PATH
 )
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"]
+)
+
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, errors.rate_limit_handler)
 
