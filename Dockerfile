@@ -16,4 +16,4 @@ RUN make
 EXPOSE 8000
 ENV LISTEN_PORT = 8000
 
-CMD ["fastapi", "run", "api/main.py"]
+CMD ["uvicorn", "api.main:app", "--host=0.0.0.0", "--proxy-headers", "--forwarded-allow-ips", "*"]
