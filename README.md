@@ -12,6 +12,7 @@ This is an API for anime-girls-and-computers [github repo](https://github.com/TH
 | Country | URL | Hosted by | Notes |
 |:-----------:|:-------:|:-------------:|:---------:|
 | 🇩🇪 | https://api.ananas.moe/agac/v1 | [bananas](https://codeberg.org/bananas) | Official Instance |
+| 🇩🇪 | https://agac.teaishealthy.me | [teaishealthy](https://github.com/teaishealthy) | Tee 🍵 |
 | 🇺🇸 | https://api.emmatech.dev/agac | [EmmmaTech](https://github.com/EmmmaTech) | Instance hosted with help from Ananas |
 
 ## 🛠️ Self-Host
