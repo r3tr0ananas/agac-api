@@ -92,7 +92,7 @@ async def info():
 
 @app.get(
     "/all",
-    name = "Allows you to get all avaliable image metadata.",
+    name = "Allows you to get all available image metadata.",
     tags = ["image"],
     response_class = JSONResponse,
     responses = {
@@ -250,46 +250,6 @@ async def search(
 
     return [
         image[1].to_dict() for image in images
-    ]
-
-@app.get(
-    "/search/advanced",
-    name = "Advanced Search for images.",
-    tags = ["image"],
-    description = "You can add multiple tags by adding \",\" after each tag",
-    response_class = JSONResponse,
-    responses = {
-        200: {
-            "model": List[ImageData],
-            "description": "Returns list of image objects.",
-        },
-    },
-)
-async def search_advanced(
-    tags: str = "",
-    author: str = None,
-    limit: int = 10
-):
-    tags = tags.split(",")
-    images: List[Image] = []
-
-    for image in agac.images:
-        if len(images) == limit:
-            break
-
-        for tag in tags:
-            for image_tag in image.tags:
-                if fuzz.partial_ratio(image_tag, tag) > 70:
-                    if image not in images:
-                        images.append(image)
-        
-        for image_authors in image.authors:
-            if image_authors["github"] == author:
-                if image not in images:
-                    images.append(image)
-
-    return [
-        image.to_dict() for image in images
     ]
 
 @app.get(

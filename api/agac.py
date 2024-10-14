@@ -80,12 +80,12 @@ class Agac:
             )
 
             images.append(image)
-            image_categories = str(file).split("/")[2:-1]       
+            image_categories = str(file).split("/")[3:-1]
 
             for category in image_categories:
                 if category not in categories:
                     categories[category] = []
 
-                categories[category].append(image)  
+                categories[category].append(image)
 
         return images, dict(sorted(categories.items()))
