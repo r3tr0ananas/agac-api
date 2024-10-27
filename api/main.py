@@ -47,7 +47,6 @@ DESCRIPTION = """
 Rate limiting applies to the ``/random`` and ``/get`` endpoints. Check out the rate limits [over here](https://codeberg.org/bananas/agac-api/wiki#rate-limiting).
 """
 
-
 limiter = Limiter(key_func=get_remote_address, headers_enabled = True)
 app = FastAPI(
     title = "AGAC-API",
@@ -243,7 +242,7 @@ async def search(
         penalty = abs(len(query) - len(image_name))
         adjusted_score = base_score - penalty
 
-        if adjusted_score > 70:
+        if adjusted_score > 40:
             images.append((adjusted_score, image))
 
     images.sort(key = lambda x: x[0], reverse = True) # Sort in order of highest match.
